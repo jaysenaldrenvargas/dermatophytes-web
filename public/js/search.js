@@ -2,7 +2,7 @@ var database = firebase.database();
 
 function getData() {
     var searchTerm = document.getElementById("search").value.toLowerCase();
-    database.ref("data").orderByChild("date").equalTo(searchTerm).on('value', function (snapshot) {
+    database.ref("data").orderByChild("id").equalTo(searchTerm).on('value', function (snapshot) {
         if (snapshot.exists()) {
             var content = '';
             $('#table-content').empty();

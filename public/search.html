@@ -1,0 +1,153 @@
+< !DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>DCDDUIP | Archive</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
+            crossorigin="anonymous"></script>
+    </head>
+    <!-- <style>
+            img {
+                height: 480px;
+            width: 640px;
+            object-fit: cover;
+  }
+        </style> -->
+
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">DCDDUIP</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                    class="fas fa-bars"></i></button>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <a class="nav-link" href="archive.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Archive
+                            </a>
+                            <a class="nav-link active" href="search.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-search"></i></div>
+                                Search
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link" href="#" onclick="signout()">
+                                <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
+                                Signout
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Admin
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4 mb-4">Search</h1>
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <div class="row">
+                                    <div class="input-group" style="width: 80%; margin-left:20px;">
+                                        <input id="search" type="text" class="search form-control"
+                                            placeholder="Search: Patient ID #" />
+                                        <div class="input-group-append">
+                                            <button onclick="ClearFields()" class="btn btn-outline-csm" type="button"><i
+                                                    class="fas fa-times"></i></button>
+                                            <button onclick="getData()" class="btn btn-primary"
+                                                type="button">Search</button>
+                                            <button onclick="excel_export(this)" class="btn btn-success mx-2"
+                                                type="button">Export</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-4 px-4" style="font-size: 12pt;">
+                                    <p id="data_num">-</p>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table id="table1" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>ID</th>
+                                            <th>Img1</th>
+                                            <th>R</th>
+                                            <th>B</th>
+                                            <th>G</th>
+                                            <th>Y</th>
+                                            <th>Total</th>
+                                            <th>Time</th>
+                                            <th>Img2</th>
+                                            <th>R</th>
+                                            <th>B</th>
+                                            <th>G</th>
+                                            <th>Y</th>
+                                            <th>Total</th>
+                                            <th id="diff">Diff.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-content">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Image</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <img id="image_modal" class="img-fluid" style="max-height:350px;"
+                                        src="assets/img/undraw_profile_1.svg">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/search.js"></script>
+    </body>
+
+    </html>

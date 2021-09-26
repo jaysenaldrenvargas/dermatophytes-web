@@ -16,7 +16,7 @@ function date_time() {
     time = ('0' + (today.getHours())).slice(-2)
         + ":" + ('0' + (today.getMinutes())).slice(-2)
         + ":" + ('0' + (today.getSeconds())).slice(-2)
-    document.getElementById("date_today").innerHTML = "&nbsp;&nbsp;[ DATE ] : <b> " + date_str + "</b> &nbsp;&nbsp;&nbsp; [ TIME ] : <b> " + time + "</b>";
+    document.getElementById("date_today").innerHTML = "[ DATE ] : <b> " + date_str + "</b> &nbsp;&nbsp;&nbsp; [ TIME ] : <b> " + time + "</b>";
 };
 
 
@@ -39,8 +39,8 @@ function getData() {
                     content += '<td> - </td>';
                 }
 
-                if (val.time) {
-                    content += '<td>' + val.time + '</td>';
+                if (val.time1) {
+                    content += '<td>' + val.time1 + '</td>';
                 } else {
                     content += '<td> - </td>';
                 }
@@ -59,8 +59,34 @@ function getData() {
                     content += '<td> - </td>';
                 }
 
-                if (val.area1) {
-                    content += '<td>' + val.area1 + '</td>';
+                if (val.R != "1") {
+                    content += '<td>' + val.R + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+
+                if (val.D != "1") {
+                    content += '<td>' + val.D + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+
+                if (val.G != "1") {
+                    content += '<td>' + val.G + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+
+                if (val.Y != "1") {
+                    content += '<td>' + val.Y + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+                var total1 = (parseFloat(val.R) + parseFloat(val.D) + parseFloat(val.G) + parseFloat(val.Y)).toFixed(2);
+                content += '<td>' + String(total1) + '</td>';
+
+                if (val.time2) {
+                    content += '<td>' + val.time2 + '</td>';
                 } else {
                     content += '<td> - </td>';
                 }
@@ -73,12 +99,33 @@ function getData() {
                     content += '<td> - </td>';
                 }
 
-                if (val.area2) {
-                    content += '<td>' + val.area2 + '</td>';
+                if (val.R2 != "1") {
+                    content += '<td>' + val.R2 + '</td>';
                 } else {
                     content += '<td> - </td>';
                 }
 
+                if (val.D2 != "1") {
+                    content += '<td>' + val.D2 + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+
+                if (val.G2 != "1") {
+                    content += '<td>' + val.G2 + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+
+                if (val.Y2 != "1") {
+                    content += '<td>' + val.Y2 + '</td>';
+                } else {
+                    content += '<td> - </td>';
+                }
+                var total2 = (parseFloat(val.R2) + parseFloat(val.D2) + parseFloat(val.G2) + parseFloat(val.Y2)).toFixed(2);
+                content += '<td>' + String(total2) + '</td>';
+
+                content += '<td>' + String((total1 - total2).toFixed(2)) + '</td>';
                 content += '</tr>';
             })
             $('#table-content').append(content);
@@ -87,6 +134,17 @@ function getData() {
                 arr.reverse();
                 $(this).append(arr);
             })
+
+            var table = document.getElementById("table1");
+            var tbodyRowCount = table.tBodies[0].rows.length;
+            document.getElementById('data_num').innerHTML = '[ ' + tbodyRowCount + ' ] data gathered';
+
+            $("td").filter(":nth-child(9)").css({ "background-color": "#198754", "font-weight": "bold", "color": "white" });
+            $("td").filter(":nth-child(16)").css({ "background-color": "#198754", "font-weight": "bold", "color": "white" });
+            $("td").filter(":nth-child(17)").css({ "background-color": "#0d6efd", "font-weight": "bold", "color": "white" });
+
+
+
             if ($('#table-content tr').length == 0) {
                 alert("No data available.");
             }

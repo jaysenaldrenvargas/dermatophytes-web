@@ -13,13 +13,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"
     crossorigin="anonymous"></script>
 </head>
-<!-- <style>
-  img {
-    height: 480px;
-    width: 640px;
-    object-fit: cover;
+<style>
+  .table {
+    font-size: medium;
   }
-</style> -->
+</style>
 
 <body class="sb-nav-fixed">
   <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -35,13 +33,17 @@
         <div class="sb-sidenav-menu">
           <div class="nav">
             <div class="sb-sidenav-menu-heading">Core</div>
-            <a class="nav-link" href="index.html">
+            <a class="nav-link active" href="index.html">
               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
               Dashboard
             </a>
             <a class="nav-link" href="archive.html">
               <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
               Archive
+            </a>
+            <a class="nav-link " href="search.html">
+              <div class="sb-nav-link-icon"><i class="fas fa-search"></i></div>
+              Search
             </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
             <a class="nav-link" href="#" onclick="signout()">
@@ -70,23 +72,39 @@
                   <button onclick="excel_export(this)" class="btn btn-success mx-2 w-100" type="button">Export</button>
                 </div>
               </div>
+              <div class="row mt-2 px-4" style="font-size: 12pt;">
+                <p id="data_num">-</p>
+              </div>
             </div>
             <div class="card-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>ID</th>
-                    <th>Img1</th>
-                    <th>Area</th>
-                    <th>Img2</th>
-                    <th>Area</th>
-                  </tr>
-                </thead>
-                <tbody id="table-content">
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table id="table1" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>ID</th>
+                      <th>Img1</th>
+                      <th>R</th>
+                      <th>B</th>
+                      <th>G</th>
+                      <th>Y</th>
+                      <th>Total</th>
+                      <th>Time</th>
+                      <th>Img2</th>
+                      <th>R</th>
+                      <th>B</th>
+                      <th>G</th>
+                      <th>Y</th>
+                      <th>Total</th>
+                      <th id="diff">Diff.</th>
+
+                    </tr>
+                  </thead>
+                  <tbody id="table-content">
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
