@@ -1,138 +1,151 @@
 var database = firebase.database();
-
+var datakey;
 function getData() {
+    var R1 = 0, G1 = 0, D1 = 0, Y1 = 0, R2 = 0, G2 = 0, D2 = 0, Y2 = 0;
     var searchTerm = document.getElementById("search").value.toLowerCase();
-    database.ref("data").orderByChild("id").equalTo(searchTerm).on('value', function (snapshot) {
+    database.ref("data").orderByChild("id").equalTo(searchTerm).once('value', function (snapshot) {
         if (snapshot.exists()) {
-            var content = '';
-            $('#table-content').empty();
             snapshot.forEach(function (data) {
+                datakey = data.key;
                 var val = data.val();
-                content += '<tr>';
                 if (val.date) {
-                    content += '<td class="text-nowrap">' + val.date + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    $('#date').text("Date: " + val.date);
                 }
 
                 if (val.time1) {
-                    content += '<td>' + val.time1 + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    $("#time1").text("Time: " + val.time1);
                 }
 
                 if (val.id) {
-                    content += '<td>' + val.id + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    $('#id').val(val.id);
                 }
 
                 if (val.img1) {
-                    var x = val.img1;
-                    x = x.trim();
-                    content += `<td><a type="button" onclick='modal_image("${x}");'><p hidden>${x}</p><i class="fas fa-image"></i></a></td>`;
+                    $('#img1').attr("src", val.img1);
                 } else {
-                    content += '<td> - </td>';
+                    $('#img1').attr("src", "assets/img/error-404-monochrome.svg");
                 }
 
                 if (val.R != "1") {
-                    content += '<td>' + val.R + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    R1 = val.R;
                 }
 
                 if (val.D != "1") {
-                    content += '<td>' + val.D + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    D1 = val.D;
                 }
 
                 if (val.G != "1") {
-                    content += '<td>' + val.G + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    G1 = val.G;
                 }
 
                 if (val.Y != "1") {
-                    content += '<td>' + val.Y + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    Y1 = val.Y;
                 }
+
                 var total1 = (parseFloat(val.R) + parseFloat(val.D) + parseFloat(val.G) + parseFloat(val.Y)).toFixed(2);
-                content += '<td>' + String(total1) + '</td>';
+                $("#total1").text("Total Detected: " + total1 + "%");
 
                 if (val.time2) {
-                    content += '<td>' + val.time2 + '</td>';
+                    $("#time2").text("Time: " + val.time2);
                 } else {
-                    content += '<td> - </td>';
+                    $("#time2").text("-");
                 }
 
                 if (val.img2) {
-                    var x = val.img2;
-                    x = x.trim();
-                    content += `<td><a type="button" onclick='modal_image("${x}");'><p hidden>${x}</p><i class="fas fa-image"></i></a></td>`;
+                    $("#img2").attr("src", val.img2);
                 } else {
-                    content += '<td> - </td>';
+                    $('#img2').attr("src", "assets/img/error-404-monochrome.svg");
                 }
 
                 if (val.R2 != "1") {
-                    content += '<td>' + val.R2 + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    R2 = val.R2;
                 }
 
                 if (val.D2 != "1") {
-                    content += '<td>' + val.D2 + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    D2 = val.D2;
                 }
 
                 if (val.G2 != "1") {
-                    content += '<td>' + val.G2 + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    G2 = val.G2;
                 }
 
                 if (val.Y2 != "1") {
-                    content += '<td>' + val.Y2 + '</td>';
-                } else {
-                    content += '<td> - </td>';
+                    Y2 = val.Y2;
                 }
-                var total2 = (parseFloat(val.R2) + parseFloat(val.D2) + parseFloat(val.G2) + parseFloat(val.Y2)).toFixed(2);
-                content += '<td>' + String(total2) + '</td>';
 
-                content += '<td>' + String((total1 - total2).toFixed(2)) + '</td>';
-                content += '</tr>';
-            })
-            $('#table-content').append(content);
-            $("#table-content").each(function (elem, index) {
-                var arr = $.makeArray($("tr", this).detach());
-                arr.reverse();
-                $(this).append(arr);
-            })
-            var table = document.getElementById("table1");
-            var tbodyRowCount = table.tBodies[0].rows.length;
-            document.getElementById('data_num').innerHTML = '[ ' + tbodyRowCount + ' ] data gathered';
+                if (val.Y2) {
+                    var total2 = (parseFloat(val.R2) + parseFloat(val.D2) + parseFloat(val.G2) + parseFloat(val.Y2)).toFixed(2);
+                    $("#total2").text("Total Detected: " + total2 + "%");
+                } else {
+                    $("#total2").text("-");
+                }
 
-            $("td").filter(":nth-child(9)").css({ "background-color": "#198754", "font-weight": "bold", "color": "white" });
-            $("td").filter(":nth-child(16)").css({ "background-color": "#198754", "font-weight": "bold", "color": "white" });
-            $("td").filter(":nth-child(17)").css({ "background-color": "#0d6efd", "font-weight": "bold", "color": "white" });
-            var table = document.getElementById("table1");
-            var tbodyRowCount = table.tBodies[0].rows.length;
-            document.getElementById('data_num').innerHTML = '[ ' + tbodyRowCount + ' ] data gathered';
+                if (val.name) {
+                    $("#name").val(val.name);
+                } else {
+                    $("#name").val('');
+                }
+
+                if (val.contact) {
+                    $("#contact").val(val.contact);
+                } else {
+                    $("#contact").val('');
+                }
+
+                if (val.age) {
+                    $("#age").val(val.age);
+                } else {
+                    $("#age").val('');
+                }
+
+                if (val.email) {
+                    $("#email").val(val.email);
+                } else {
+                    $("#email").val('');
+                }
+
+                if (val.contact) {
+                    $("#contact").val(val.contact);
+                } else {
+                    $("#contact").val('');
+                }
+
+                if (val.sex) {
+                    $("#sex").val(val.sex);
+                } else {
+                    $("#sex").val('');
+                }
+            })
         } else {
-            alert("No data found.");
+            alert("Patient ID [ " + searchTerm + " ] not found.\nReloading the page ...");
+            location.reload();
         }
     })
 };
 
+function deleteData() {
+    database.ref("data").child(datakey).remove().then(() => { alert("Data removed."); location.reload(); });
+}
 
-function modal_image(x) {
-    console.log(x);
-    document.getElementById('image_modal').src = x;
-    $('#exampleModal').modal('show');
-};
+function updateData() {
+    var name = $("#name").val();
+    var sex = $("#sex").val();
+    var age = $("#age").val();
+    var contact = $("#contact").val();
+    var email = $("#email").val();
 
+    var data = {
+        "sex": sex,
+        "name": name,
+        "age": age,
+        "contact": contact,
+        "email": email
+    }
+    database.ref("data").child(datakey).update(data).then(() => {
+        alert("Data updated.");
+    });
+
+}
 
 function excel_export() {
     var searchTerm = document.getElementById("search").value.toLowerCase();
@@ -151,8 +164,4 @@ function excel_export() {
             name: 'Sheet 1'
         }
     });
-};
-
-function ClearFields() {
-    location.reload();
 };
